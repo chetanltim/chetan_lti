@@ -1,0 +1,18 @@
+---
+hosts: "TargetServer" 
+become: true
+tasks:
+  - name: Ensure the cron package is installed
+    package: 
+      name: cron 
+      state: present
+ 
+  - name: Schedule weekly reboot
+    cron:
+      name: "Reboot Weekly"
+      minute: 0
+      hour: 4
+      weekday: 0 # 0 corresponds to sunday, if 1 will be monday and so on 
+      job: "/sbin/shutdown -r now" # here job is the command for shud down 
+                                   #and -r represent reboot and now argument is for happen immediatly
+      
